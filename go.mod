@@ -1,4 +1,4 @@
-module github.com/harness/goDemo
+module github.com/harness/go-sample-app
 
 go 1.15
 
