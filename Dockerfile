@@ -1,28 +1,21 @@
 # Dockerfile References: https://docs.docker.com/engine/reference/builder/
 
-# Start from the latest golang base image
-FROM golang:latest
+# Use a scratch image because Go has zero runtime
+# dependencies. Using a small base image helps keep
+# our docker images small and secure.
+FROM scratch
 
 # Add Maintainer Info
 LABEL maintainer="Nofar Bluestein <nofarb@gmail.com>"
 
 # Set the Current Working Directory inside the container
-WORKDIR /app
+WORKDIR /
 
 # Copy go mod and sum files
-COPY go.mod go.sum ./
-
-# Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
-RUN go mod download
-
-# Copy the source from the current directory to the Working Directory inside the container
-COPY . .
-
-# Build the Go app
-RUN go build -o main .
+COPY go-sample-app /go-sample-app
 
 # Expose port 8080 to the outside world
 EXPOSE 8080
 
 # Command to run the executable
-CMD ["./main"]
+CMD ["./go-sample-app"]
