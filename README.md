@@ -10,7 +10,7 @@ Several Examples for building docker containers for your Go applications.
 
 ```bash
 $ go build
-$ ./go-docker
+$ ./go-sample-app
 2019/02/03 11:38:11 Starting Server
 ```
 
