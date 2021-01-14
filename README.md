@@ -2,7 +2,7 @@
 GO + Docker + unit tests
 
 
-# go-docker 
+# go-Sample-App 
 
 Several Examples for building docker containers for your Go applications.
 
