@@ -1,33 +1,28 @@
-FROM golang:1.12-alpine AS build_base
+# Dockerfile References: https://docs.docker.com/engine/reference/builder/
 
-RUN apk add --no-cache git
+# Start from the latest golang base image
+FROM golang:latest
+
+# Add Maintainer Info
+LABEL maintainer="Nofar Bluestein <nofarb@gmail.com>"
 
 # Set the Current Working Directory inside the container
-WORKDIR /tmp/go-sample-app
+WORKDIR /app
 
-# We want to populate the module cache based on the go.{mod,sum} files.
-COPY go.mod .
-COPY go.sum .
+# Copy go mod and sum files
+COPY go.mod go.sum ./
 
+# Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
 RUN go mod download
 
+# Copy the source from the current directory to the Working Directory inside the container
 COPY . .
 
-# Unit tests
-RUN CGO_ENABLED=0 go test -v
-
 # Build the Go app
-RUN go build -o ./out/go-sample-app .
+RUN go build -o main .
 
-# Start fresh from a smaller image
-FROM alpine:3.9 
-RUN apk add ca-certificates
-
-
-COPY --from=build_base /tmp/go-sample-app/out/go-sample-app /app/go-sample-app
-
-# This container exposes port 8080 to the outside world
+# Expose port 8080 to the outside world
 EXPOSE 8080
 
-# Run the binary program produced by `go install`
-CMD ["/app/go-sample-app"]
+# Command to run the executable
+CMD ["./main"]
