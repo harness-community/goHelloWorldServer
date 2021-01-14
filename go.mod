@@ -1,4 +1,4 @@
-module github.com/codefresh-contrib/go-sample-app
+module github.com/harness/goDemo
 
 go 1.15
 
