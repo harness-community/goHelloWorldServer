@@ -23,10 +23,5 @@ func TestGreetingDefault(t *testing.T) {
 	}
 }
 
-func FailedTest1(t *testing.T) {
-	greeting := CreateGreeting("Fake Failue")
-	t.Errorf("Greeting was incorrect, got: %s, want: %s.", greeting, "Hello, John\n")
-
-}
 
 
