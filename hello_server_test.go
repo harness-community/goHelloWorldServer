@@ -16,6 +16,13 @@ func TestGreetingSpecificDemo(t *testing.T) {
 	}
 }
 
+func TestThatShoudFail(t *testing.T) {
+	greeting := CreateGreeting("Demo1")
+	if greeting != "Hello, Demo\n" {
+		t.Errorf("Intentional Failure. Greeting was incorrect, got: %s, want: %s.", greeting, "Hello, Demo\n")
+	}
+}
+
 func TestGreetingDefault(t *testing.T) {
 	greeting := CreateGreeting("")
 	if greeting != "Hello, Guest\n" {
