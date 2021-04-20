@@ -1,8 +1,8 @@
-# HelloWorldGoServer
+# HelloWorld sdfsdf. GoServer
 GO + Docker + unit tests
 
 
-## Running the app locally
+## Running the AAA app locally
 
 ```bash
 $ go build
