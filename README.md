@@ -1,8 +1,8 @@
-# HelloWorldGoServer
+# HelloWorld sdfsdf. GoServer
 GO + Docker + unit tests
 
 
-## Running the app locally
+## Running the AAA app locally
 
 ```bash
 $ go build
@@ -14,3 +14,4 @@ $ ./go-sample-app
 $ curl http://localhost:8080?name=Nofar
 Hello, Nofar
 ```
+fd
