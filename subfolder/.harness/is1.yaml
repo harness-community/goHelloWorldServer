@@ -1,0 +1,19 @@
+inputSet:
+  identifier: "is1"
+  name: "is1"
+  orgIdentifier: "Archit"
+  projectIdentifier: "nofar_git_exp3"
+  pipeline:
+    identifier: "test2"
+    stages:
+    - stage:
+        identifier: "stage1"
+        type: "CI"
+        spec:
+          execution:
+            steps:
+            - step:
+                identifier: "test"
+                type: "Run"
+                spec:
+                  image: "alpine"
