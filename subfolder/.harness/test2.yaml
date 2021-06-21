@@ -20,7 +20,7 @@ pipeline:
                                 identifier: test
                                 spec:
                                     connectorRef: harnessImage
-                                    image: alpine
+                                    image: <+input>
                                     command: echo 'hello moo'
                                     privileged: false
                   serviceDependencies: []
