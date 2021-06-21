@@ -1,0 +1,31 @@
+pipeline:
+    name: nofar_test1
+    identifier: nofar_test1
+    projectIdentifier: nofar_git_exp3
+    orgIdentifier: Archit
+    tags: {}
+    stages:
+        - stage:
+              name: S1
+              identifier: S1
+              description: ""
+              type: CI
+              spec:
+                  cloneCodebase: false
+                  execution:
+                      steps:
+                          - step:
+                                type: Run
+                                name: echo
+                                identifier: echo
+                                spec:
+                                    connectorRef: harnessImage
+                                    image: alpine
+                                    command: echo 'hello'
+                                    privileged: false
+                  serviceDependencies: []
+                  infrastructure:
+                      type: KubernetesDirect
+                      spec:
+                          connectorRef: account.harnessci
+                          namespace: dontknow
