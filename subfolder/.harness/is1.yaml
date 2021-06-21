@@ -1,6 +1,7 @@
 inputSet:
   identifier: "is1"
   name: "is1"
+  tags: {}
   orgIdentifier: "Archit"
   projectIdentifier: "nofar_git_exp3"
   pipeline:
@@ -16,4 +17,4 @@ inputSet:
                 identifier: "test"
                 type: "Run"
                 spec:
-                  image: "alpine"
+                  image: "maven"
