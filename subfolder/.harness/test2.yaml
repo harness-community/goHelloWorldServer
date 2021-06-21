@@ -21,7 +21,7 @@ pipeline:
                                 spec:
                                     connectorRef: harnessImage
                                     image: alpine
-                                    command: echo 'hello'
+                                    command: echo 'hello moo'
                                     privileged: false
                   serviceDependencies: []
                   infrastructure:
