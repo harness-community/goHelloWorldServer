@@ -96,7 +96,6 @@ pipeline:
             codebase:
                 connectorRef: account.goHelloWorldServer_repo
                 build: <+input>
-                sslVerify: false
     variables:
         - name: pipelineVar
           type: String
