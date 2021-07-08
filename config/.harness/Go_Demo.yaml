@@ -80,6 +80,15 @@ pipeline:
                                         sleep 5
                                         curl localhost:8080
                                     privileged: false
+                          - step:
+                                type: Run
+                                name: echo
+                                identifier: echo
+                                spec:
+                                    connectorRef: account.nofar_dockerhub
+                                    image: alpine
+                                    command: echo "hello"
+                                    privileged: false
                   serviceDependencies:
                       - identifier: runhelloworldserver
                         name: Run Hello World Server
