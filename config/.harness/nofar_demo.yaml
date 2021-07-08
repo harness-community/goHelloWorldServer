@@ -1,0 +1,26 @@
+inputSet:
+  identifier: "nofar_demo"
+  name: "nofar_demo"
+  orgIdentifier: "default"
+  projectIdentifier: "Product_Demos_CIE"
+  pipeline:
+    identifier: "Go_Demo"
+    stages:
+    - stage:
+        identifier: "Run_Integration_Test"
+        type: "CI"
+        spec:
+          execution:
+            steps:
+            - step:
+                identifier: "test_connection_to_server"
+                type: "Run"
+                spec:
+                  image: "curlimages/curl:7.69.1"
+    properties:
+      ci:
+        codebase:
+          build:
+            type: "branch"
+            spec:
+              branch: "main"
