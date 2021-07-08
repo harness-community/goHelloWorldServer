@@ -75,7 +75,7 @@ pipeline:
                                 identifier: test_connection_to_server
                                 spec:
                                     connectorRef: account.nofar_dockerhub
-                                    image: <+input>
+                                    image: curlimages/curl:7.69.1
                                     command: |-
                                         sleep 5
                                         curl localhost:8080
