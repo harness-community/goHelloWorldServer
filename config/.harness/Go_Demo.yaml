@@ -75,10 +75,11 @@ pipeline:
                                 identifier: test_connection_to_server
                                 spec:
                                     connectorRef: account.nofar_dockerhub
-                                    image: curlimages/curl:7.69.1
+                                    image: <+input>
                                     command: |-
                                         sleep 5
                                         curl localhost:8080
+                                    privileged: false
                   serviceDependencies:
                       - identifier: runhelloworldserver
                         name: Run Hello World Server
