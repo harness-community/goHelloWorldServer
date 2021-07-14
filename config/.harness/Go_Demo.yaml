@@ -16,6 +16,7 @@ pipeline:
                           - step:
                                 type: Run
                                 name: Run Unit Tests
+                                timeout: 1h
                                 identifier: Run_Unit_Tests
                                 spec:
                                     connectorRef: account.nofar_dockerhub
