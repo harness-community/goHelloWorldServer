@@ -15,6 +15,15 @@ pipeline:
                       steps:
                           - step:
                                 type: Run
+                                name: faul build
+                                identifier: faul_build
+                                spec:
+                                    connectorRef: account.nofar_dockerhub
+                                    image: alpine
+                                    command: sadsdasd
+                                    privileged: false
+                          - step:
+                                type: Run
                                 name: Run Unit Tests
                                 identifier: Run_Unit_Tests
                                 spec:
