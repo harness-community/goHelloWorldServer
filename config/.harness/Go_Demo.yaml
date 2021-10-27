@@ -15,15 +15,6 @@ pipeline:
                       steps:
                           - step:
                                 type: Run
-                                name: fail builds
-                                identifier: fail_builds
-                                spec:
-                                    connectorRef: account.nofar_dockerhub
-                                    image: alpine
-                                    command: adas sad asdf
-                                    privileged: false
-                          - step:
-                                type: Run
                                 name: Run Unit Tests
                                 identifier: Run_Unit_Tests
                                 spec:
@@ -33,37 +24,40 @@ pipeline:
                                         set +e
                                         go get gotest.tools/gotestsum
                                         gotestsum --format=standard-verbose --junitfile unit-tests.xml
-                                        CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo
                                         exit 0
+                                    privileged: false
                                     reports:
                                         type: JUnit
                                         spec:
                                             paths:
                                                 - "*.xml"
-                          - parallel:
-                                - step:
-                                      type: BuildAndPushDockerRegistry
-                                      name: Build and push image to DockerHub
-                                      identifier: Build_and_push_image_to_DockerHub
-                                      spec:
-                                          connectorRef: account.nofar_dockerhub
-                                          repo: bluebbb/godemo
-                                          tags:
-                                              - <+pipeline.sequenceId>
-                                - step:
-                                      type: Run
-                                      name: show workspace content
-                                      identifier: show_workspace_content
-                                      spec:
-                                          connectorRef: account.nofar_dockerhub
-                                          image: alpine
-                                          command: ls
+                          - step:
+                                type: Run
+                                name: Go Build
+                                identifier: Go_Build
+                                spec:
+                                    connectorRef: account.nofar_dockerhub
+                                    image: golang:1.15
+                                    command: |-
+                                        set +e
+                                        go get gotest.tools/gotestsum
+                                        CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo
+                                        exit 0
+                                    privileged: false
+                          - step:
+                                type: BuildAndPushDockerRegistry
+                                name: Build and push image to DockerHub
+                                identifier: Build_and_push_image_to_DockerHub
+                                spec:
+                                    connectorRef: account.nofar_dockerhub
+                                    repo: bluebbb/godemo
+                                    tags:
+                                        - <+pipeline.sequenceId>
                   infrastructure:
                       type: KubernetesDirect
                       spec:
                           connectorRef: account.k8scluster
                           namespace: harness-delegate-pmdemo
-                  serviceDependencies: []
                   sharedPaths:
                       - ""
               variables:
