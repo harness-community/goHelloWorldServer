@@ -52,7 +52,8 @@ pipeline:
                                     connectorRef: account.nofar_dockerhub
                                     repo: bluebbb/godemo
                                     tags:
-                                        - <+pipeline.sequenceId>
+                                        - latest
+                                    optimize: true
                   infrastructure:
                       type: KubernetesDirect
                       spec:
