@@ -15,6 +15,15 @@ pipeline:
                       steps:
                           - step:
                                 type: Run
+                                name: echo
+                                identifier: echo
+                                spec:
+                                    connectorRef: account.nofar_dockerhub
+                                    image: alpine
+                                    command: echo <+codebase.build.type>
+                                    privileged: false
+                          - step:
+                                type: Run
                                 name: Run Unit Tests
                                 identifier: Run_Unit_Tests
                                 spec:
@@ -31,6 +40,10 @@ pipeline:
                                         spec:
                                             paths:
                                                 - "*.xml"
+                                when:
+                                    stageStatus: Success
+                                    condition: <+codebase.build.type> == "Tag"
+                                failureStrategies: []
                           - step:
                                 type: Run
                                 name: Go Build
@@ -46,7 +59,6 @@ pipeline:
                                     privileged: false
                                 when:
                                     stageStatus: Success
-                                    condition: <+codebase.build.type> == "Tag" && <+codebase.tag> == "v"
                                 failureStrategies: []
                           - step:
                                 type: BuildAndPushDockerRegistry
