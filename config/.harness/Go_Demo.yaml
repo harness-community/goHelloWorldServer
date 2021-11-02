@@ -44,6 +44,10 @@ pipeline:
                                         CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo
                                         exit 0
                                     privileged: false
+                                when:
+                                    stageStatus: Success
+                                    condition: <+codebase.build.type> == "Tag" && <+codebase.tag> == "v"
+                                failureStrategies: []
                           - step:
                                 type: BuildAndPushDockerRegistry
                                 name: Build and push image to DockerHub
