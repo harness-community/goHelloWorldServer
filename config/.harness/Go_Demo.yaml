@@ -20,7 +20,7 @@ pipeline:
                                 spec:
                                     connectorRef: account.nofar_dockerhub
                                     image: alpine
-                                    command: echo <+codebase.tag>
+                                    command: echo <+codebase.commitSha>
                                     privileged: false
                           - step:
                                 type: Run
