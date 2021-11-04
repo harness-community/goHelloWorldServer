@@ -42,7 +42,7 @@ pipeline:
                                                 - "*.xml"
                                 when:
                                     stageStatus: Success
-                                    condition: <+codebase.build.type> == "Tag"
+                                    condition: <+codebase.build.type> == "Tag" && <+codebase.tag> == "nonexistingtag"
                                 failureStrategies: []
                           - step:
                                 type: Run
