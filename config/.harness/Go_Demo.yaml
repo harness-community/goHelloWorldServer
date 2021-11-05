@@ -46,7 +46,7 @@ pipeline:
                                         if (<+codebase.build.type> == "Tag") {
 
                                         If (<+codebase.tag> == "nonexistingtag”)
-                                        { return true}
+                                        { return true;}
 
                                         }
                                 failureStrategies: []
