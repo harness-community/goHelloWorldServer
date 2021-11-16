@@ -1,0 +1,31 @@
+pipeline:
+    name: test2
+    identifier: test2
+    projectIdentifier: nofar_git_exp3
+    orgIdentifier: Archit
+    tags: {}
+    stages:
+        - stage:
+              name: stage1
+              identifier: stage1
+              description: ""
+              type: CI
+              spec:
+                  cloneCodebase: false
+                  execution:
+                      steps:
+                          - step:
+                                type: Run
+                                name: test
+                                identifier: test
+                                spec:
+                                    connectorRef: harnessImage
+                                    image: <+input>
+                                    command: echo 'hello moo'
+                                    privileged: false
+                  serviceDependencies: []
+                  infrastructure:
+                      type: KubernetesDirect
+                      spec:
+                          connectorRef: account.trtrtr
+                          namespace: whatever
