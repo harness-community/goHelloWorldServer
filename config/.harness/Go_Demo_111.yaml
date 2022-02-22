@@ -15,7 +15,7 @@ pipeline:
                       steps:
                           - step:
                                 type: Run
-                                name: print content
+                                name: print content 233
                                 identifier: print_content
                                 spec:
                                     connectorRef: account.nofar_dockerhub
