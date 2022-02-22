@@ -20,7 +20,7 @@ pipeline:
                                 spec:
                                     connectorRef: account.nofar_dockerhub
                                     image: alpine
-                                    command: echo <+codebase.branch>
+                                    command: echo "main"
                                     privileged: false
                   infrastructure:
                       type: KubernetesDirect
