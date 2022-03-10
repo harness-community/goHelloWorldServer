@@ -48,3 +48,6 @@ pipeline:
         - name: pipelineVar
           type: String
           value: pipelineVarValue
+        - name: myVar
+          type: String
+          value: <+input>
