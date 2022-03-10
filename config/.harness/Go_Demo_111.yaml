@@ -31,7 +31,7 @@ pipeline:
               variables:
                   - name: myStageVar
                     type: String
-                    value: stageVarValue
+                    value: <+input>
     properties:
         ci:
             codebase:
