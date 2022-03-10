@@ -36,6 +36,13 @@ pipeline:
             codebase:
                 connectorRef: account.goHelloWorldServer_repo
                 build: <+input>
+                depth: 222
+                sslVerify: false
+                prCloneStrategy: MergeCommit
+                resources:
+                    limits:
+                        memory: 2Mi
+                        cpu: "4"
     variables:
         - name: pipelineVar
           type: String
