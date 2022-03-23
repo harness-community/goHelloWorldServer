@@ -43,7 +43,7 @@ pipeline:
                                                           connectorRef: goHelloWorld
                                                           gitFetchType: Branch
                                                           paths:
-                                                              - values.yaml
+                                                              - valuesTest.yaml
                                                           branch: main
                                     artifacts:
                                         primary:
@@ -90,6 +90,42 @@ pipeline:
                         serviceConfig:
                             useFromStage:
                                 stage: Deploy_Service
+                            stageOverrides:
+                                artifacts:
+                                    sidecars: []
+                                    primary:
+                                        spec:
+                                            connectorRef: org.Docker_Hub
+                                            imagePath: rmailaender/gohelloworldserver
+                                            tag: <+input>
+                                        type: DockerRegistry
+                                manifests:
+                                    - manifest:
+                                          identifier: GoDeployment
+                                          type: K8sManifest
+                                          spec:
+                                              store:
+                                                  type: Github
+                                                  spec:
+                                                      connectorRef: goHelloWorld
+                                                      gitFetchType: Branch
+                                                      paths:
+                                                          - deployment.yaml
+                                                      branch: main
+                                              skipResourceVersioning: false
+                                    - manifest:
+                                          identifier: valuesProd
+                                          type: Values
+                                          spec:
+                                              store:
+                                                  type: Github
+                                                  spec:
+                                                      connectorRef: goHelloWorld
+                                                      gitFetchType: Branch
+                                                      paths:
+                                                          - valuesProd.yaml
+                                                      branch: main
+                                variables: []
                         infrastructure:
                             environmentRef: Test
                             infrastructureDefinition:
