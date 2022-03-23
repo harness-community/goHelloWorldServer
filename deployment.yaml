@@ -30,6 +30,6 @@ spec:
     spec:
       containers:
       - name: gopod
-        image: rmailaender/gohelloworldserver:12
+        image: {{.Values.image}}
         ports:
         - containerPort: 8080
