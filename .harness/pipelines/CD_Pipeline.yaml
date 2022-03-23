@@ -1,0 +1,211 @@
+pipeline:
+    name: CD Pipeline
+    identifier: CD_Pipeline
+    allowStageExecutions: false
+    projectIdentifier: goHelloWorld
+    orgIdentifier: default
+    tags: {}
+    stages:
+        - parallel:
+              - stage:
+                    name: Deploy to test
+                    identifier: Deploy_Service
+                    description: ""
+                    type: Deployment
+                    spec:
+                        serviceConfig:
+                            serviceRef: goHelloWorld
+                            serviceDefinition:
+                                type: Kubernetes
+                                spec:
+                                    variables: []
+                                    manifests:
+                                        - manifest:
+                                              identifier: GoDeployment
+                                              type: K8sManifest
+                                              spec:
+                                                  store:
+                                                      type: Github
+                                                      spec:
+                                                          connectorRef: goHelloWorld
+                                                          gitFetchType: Branch
+                                                          paths:
+                                                              - deployment.yaml
+                                                          branch: main
+                                                  skipResourceVersioning: false
+                                        - manifest:
+                                              identifier: values
+                                              type: Values
+                                              spec:
+                                                  store:
+                                                      type: Github
+                                                      spec:
+                                                          connectorRef: goHelloWorld
+                                                          gitFetchType: Branch
+                                                          paths:
+                                                              - valuesTest.yaml
+                                                          branch: main
+                                    artifacts:
+                                        primary:
+                                            spec:
+                                                connectorRef: org.Docker_Hub
+                                                imagePath: rmailaender/gohelloworldserver
+                                                tag: <+input>
+                                            type: DockerRegistry
+                        infrastructure:
+                            environmentRef: Test
+                            infrastructureDefinition:
+                                type: KubernetesDirect
+                                spec:
+                                    connectorRef: org.GKEdefault
+                                    namespace: goserver-test
+                                    releaseName: release-<+INFRA_KEY>
+                            allowSimultaneousDeployments: false
+                        execution:
+                            steps:
+                                - step:
+                                      type: K8sRollingDeploy
+                                      name: Deployment
+                                      identifier: Deployment
+                                      spec:
+                                          skipDryRun: false
+                                      timeout: 10m
+                                      failureStrategies: []
+                            rollbackSteps: []
+                        serviceDependencies: []
+                    tags: {}
+                    failureStrategies:
+                        - onFailure:
+                              errors:
+                                  - AllErrors
+                              action:
+                                  type: StageRollback
+                    variables: []
+              - stage:
+                    name: Deploy to prod
+                    identifier: Deploy_to_prod
+                    description: ""
+                    type: Deployment
+                    spec:
+                        serviceConfig:
+                            useFromStage:
+                                stage: Deploy_Service
+                            stageOverrides:
+                                artifacts:
+                                    sidecars: []
+                                    primary:
+                                        spec:
+                                            connectorRef: org.Docker_Hub
+                                            imagePath: rmailaender/gohelloworldserver
+                                            tag: <+input>
+                                        type: DockerRegistry
+                                manifests:
+                                    - manifest:
+                                          identifier: GoDeployment
+                                          type: K8sManifest
+                                          spec:
+                                              store:
+                                                  type: Github
+                                                  spec:
+                                                      connectorRef: goHelloWorld
+                                                      gitFetchType: Branch
+                                                      paths:
+                                                          - deployment.yaml
+                                                      branch: main
+                                              skipResourceVersioning: false
+                                    - manifest:
+                                          identifier: valuesProd
+                                          type: Values
+                                          spec:
+                                              store:
+                                                  type: Github
+                                                  spec:
+                                                      connectorRef: goHelloWorld
+                                                      gitFetchType: Branch
+                                                      paths:
+                                                          - valuesProd.yaml
+                                                      branch: main
+                                variables: []
+                        infrastructure:
+                            environmentRef: Test
+                            infrastructureDefinition:
+                                type: KubernetesDirect
+                                spec:
+                                    connectorRef: org.GKEdefault
+                                    namespace: goserver-prod
+                                    releaseName: release-<+INFRA_KEY>
+                            allowSimultaneousDeployments: false
+                        execution:
+                            steps:
+                                - step:
+                                      type: HarnessApproval
+                                      name: Manual Approve
+                                      identifier: Manual_Approve
+                                      spec:
+                                          approvalMessage: Please review the following information and approve the pipeline progression
+                                          includePipelineExecutionHistory: true
+                                          approvers:
+                                              userGroups:
+                                                  - account.GoHelloServerApprover
+                                              minimumCount: 1
+                                              disallowPipelineExecutor: false
+                                          approverInputs: []
+                                      timeout: 1d
+                                      failureStrategies: []
+                                - stepGroup:
+                                      name: Canary Deployment
+                                      identifier: canaryDepoyment
+                                      steps:
+                                          - step:
+                                                name: Canary Deployment
+                                                identifier: canaryDeployment
+                                                type: K8sCanaryDeploy
+                                                timeout: 10m
+                                                spec:
+                                                    instanceSelection:
+                                                        type: Count
+                                                        spec:
+                                                            count: 1
+                                                    skipDryRun: false
+                                          - step:
+                                                name: Canary Delete
+                                                identifier: canaryDelete
+                                                type: K8sCanaryDelete
+                                                timeout: 10m
+                                                spec: {}
+                                      rollbackSteps:
+                                          - step:
+                                                name: Canary Delete
+                                                identifier: rollbackCanaryDelete
+                                                type: K8sCanaryDelete
+                                                timeout: 10m
+                                                spec: {}
+                                - stepGroup:
+                                      name: Primary Deployment
+                                      identifier: primaryDepoyment
+                                      steps:
+                                          - step:
+                                                name: Rolling Deployment
+                                                identifier: rollingDeployment
+                                                type: K8sRollingDeploy
+                                                timeout: 10m
+                                                spec:
+                                                    skipDryRun: false
+                                                failureStrategies: []
+                                      rollbackSteps:
+                                          - step:
+                                                name: Rolling Rollback
+                                                identifier: rollingRollback
+                                                type: K8sRollingRollback
+                                                timeout: 10m
+                                                spec: {}
+                            rollbackSteps: []
+                        serviceDependencies: []
+                    tags: {}
+                    failureStrategies:
+                        - onFailure:
+                              errors:
+                                  - AllErrors
+                              action:
+                                  type: StageRollback
+                    variables: []
