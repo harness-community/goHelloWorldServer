@@ -8,7 +8,7 @@ spec:
   type: NodePort
   ports:
   - port: 8080
-    nodePort: 31000
+    nodePort: {{.Values.nodePort}}
   selector:
     app: gohelloworldpod
 ---
