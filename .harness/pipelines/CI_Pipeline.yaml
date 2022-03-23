@@ -1,0 +1,82 @@
+pipeline:
+    name: CI Pipeline
+    identifier: CI_Pipeline
+    allowStageExecutions: false
+    projectIdentifier: goHelloWorld
+    orgIdentifier: default
+    tags: {}
+    properties:
+        ci:
+            codebase:
+                connectorRef: goHelloWorld
+                build: <+input>
+    stages:
+        - stage:
+              name: Build Test and Push
+              identifier: Build_Test_and_Push
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  infrastructure:
+                      type: KubernetesDirect
+                      spec:
+                          connectorRef: org.GKEdefault
+                          namespace: harness-build
+                  execution:
+                      steps:
+                          - step:
+                                type: Run
+                                name: Run Unit Tests
+                                identifier: Run_Unit_Tests
+                                spec:
+                                    connectorRef: org.Docker_Hub
+                                    image: golang:1.15
+                                    command: |-
+                                        go get gotest.tools/gotestsum
+                                        gotestsum --format=standard-verbose --junitfile unit-tests.xml || true
+                                        CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo
+                                    reports:
+                                        type: JUnit
+                                        spec:
+                                            paths:
+                                                - "*.xml"
+                                failureStrategies: []
+                          - step:
+                                type: BuildAndPushDockerRegistry
+                                name: Build and push image to Docker Hub
+                                identifier: Build_and_push_image_to_Docker_Hub
+                                spec:
+                                    connectorRef: org.Docker_Hub
+                                    repo: rmailaender/gohelloworldserver
+                                    tags:
+                                        - <+pipeline.sequenceId>
+        - stage:
+              name: Integration tests
+              identifier: Integration_tests
+              type: CI
+              spec:
+                  cloneCodebase: false
+                  infrastructure:
+                      useFromStage: Build_Test_and_Push
+                  execution:
+                      steps:
+                          - step:
+                                type: Run
+                                name: test connection to server
+                                identifier: test_connection_to_server
+                                spec:
+                                    connectorRef: org.Docker_Hub
+                                    image: curlimages/curl:7.73.0
+                                    command: |-
+                                        sleep 10
+                                        curl localhost:8080
+                                        curl localhost:8080?Hello!_I_am_a_nice_demo!
+                  serviceDependencies:
+                      - identifier: go_Server
+                        name: go Server
+                        type: Service
+                        spec:
+                            connectorRef: org.Docker_Hub
+                            image: rmailaender/gohelloworldserver:<+pipeline.sequenceId>
+    flowControl:
+        barriers: []
