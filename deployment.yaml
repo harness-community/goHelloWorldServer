@@ -30,6 +30,6 @@ spec:
     spec:
       containers:
       - name: gopod
-        image: rmailaender/gohelloworldserver
+        image: rmailaender/gohelloworldserver:12
         ports:
         - containerPort: 80
