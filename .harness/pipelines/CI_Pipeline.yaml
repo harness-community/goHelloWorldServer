@@ -49,7 +49,8 @@ pipeline:
                                     connectorRef: org.Docker_Hub
                                     repo: rmailaender/gohelloworldserver
                                     tags:
-                                        - <+pipeline.sequenceId>
+                                        - <+pipeline.variables.branchpushed>-<+pipeline.sequenceId>
+                                failureStrategies: []
         - stage:
               name: Integration tests
               identifier: Integration_tests
