@@ -78,7 +78,7 @@ pipeline:
                         type: Service
                         spec:
                             connectorRef: org.Docker_Hub
-                            image: rmailaender/gohelloworldserver:<+pipeline.sequenceId>
+                            image: rmailaender/gohelloworldserver:<+pipeline.variables.branchpushed>-<+pipeline.sequenceId>
     flowControl:
         barriers: []
     variables:
