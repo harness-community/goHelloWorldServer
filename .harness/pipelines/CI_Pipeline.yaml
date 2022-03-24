@@ -80,3 +80,7 @@ pipeline:
                             image: rmailaender/gohelloworldserver:<+pipeline.sequenceId>
     flowControl:
         barriers: []
+    variables:
+        - name: branchpushed
+          type: String
+          value: <+input>.allowedValues(main,feature)
