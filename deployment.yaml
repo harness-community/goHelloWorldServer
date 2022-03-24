@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: go-hello-world-svc
+  name: {{.Values.prefix}}go-hello-world-svc
   labels:
-    app: gohelloworld
+    app: {{.Values.prefix}}gohelloworld
   annotations:
     external-dns.alpha.kubernetes.io/hostname: {{.Values.dnsName}}
 spec:
@@ -12,26 +12,26 @@ spec:
   - port: 8080
     nodePort: {{.Values.nodePort}}
   selector:
-    app: gohelloworldpod
+    app: {{.Values.prefix}}gohelloworldpod
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: go-hello-world-deploymentg
+  name: {{.Values.prefix}}go-hello-world-deployment
   labels:
-    app: gohelloworld
+    app: {{.Values.prefix}}gohelloworld
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: gohelloworldpod
+      app: {{.Values.prefix}}gohelloworldpod
   template:
     metadata:
       labels:
-        app: gohelloworldpod
+        app: {{.Values.prefix}}gohelloworldpod
     spec:
       containers:
-      - name: gopod
+      - name: {{.Values.prefix}}gopod
         image: {{.Values.image}}
         ports:
         - containerPort: 8080
