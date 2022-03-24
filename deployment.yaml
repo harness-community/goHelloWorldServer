@@ -4,6 +4,8 @@ metadata:
   name: go-hello-world-svc
   labels:
     app: gohelloworld
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: {{.Values.dnsName}}
 spec:
   type: NodePort
   ports:

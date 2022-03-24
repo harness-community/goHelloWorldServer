@@ -1,2 +1,3 @@
 image: <+artifact.image>
 nodePort: 32000
+dnsName: gohelloworld.cloud.daz.ch

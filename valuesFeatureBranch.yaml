@@ -1,0 +1,3 @@
+image: <+artifact.image>
+nodePort: 33000
+dnsName: <+pipeline.stages.deploy_featurebranch.variables.namespace>.test.cloud.daz.ch
