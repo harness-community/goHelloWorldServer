@@ -4,6 +4,7 @@ import "testing"
 
 func TestGreetingSpecificJohn(t *testing.T) {
 	greeting := CreateGreeting("John")
+	time.Sleep(time.Millisecond*100)
 	if greeting != "Hello, John\n" {
 		t.Errorf("Greeting was incorrect, got: %s, want: %s.", greeting, "Hello, John\n")
 	}
@@ -16,12 +17,12 @@ func TestGreetingSpecificDemo(t *testing.T) {
 	}
 }
 
-func TestShowFailure(t *testing.T) {
+/* func TestShowFailure(t *testing.T) {
 	greeting := CreateGreeting("Demo1")
 	if greeting != "Hello, Demo\n" {
 		t.Errorf("Intentional failure. got: %s, want: %s.", greeting, "Hello, Demo\n")
 	}
-}
+} */
 
 
 
