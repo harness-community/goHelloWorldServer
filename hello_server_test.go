@@ -1,6 +1,10 @@
 package main
+import (
+    "fmt"
+    "time"
+    "testing"
+)
 
-import "testing"
 
 func TestGreetingSpecificJohn(t *testing.T) {
 	time.Sleep(8 * time.Second)
