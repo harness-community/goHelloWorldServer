@@ -3,6 +3,7 @@ package main
 import "testing"
 
 func TestGreetingSpecificJohn(t *testing.T) {
+	time.Sleep(8 * time.Second)
 	greeting := CreateGreeting("John")
 	if greeting != "Hello, John\n" {
 		t.Errorf("Greeting was incorrect, got: %s, want: %s.", greeting, "Hello, John\n")
