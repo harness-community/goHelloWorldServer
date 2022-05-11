@@ -1,0 +1,83 @@
+pipeline:
+    name: CI_test
+    identifier: CI_test
+    projectIdentifier: PaaS_CI
+    orgIdentifier: default
+    tags: {}
+    properties:
+        ci:
+            codebase:
+                connectorRef: vsqdisqo
+                repoName: goHelloWorldServer
+                build: <+input>
+    stages:
+        - stage:
+              name: Build Test and Push
+              identifier: Build_Test_and_Push
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  infrastructure:
+                      type: KubernetesDirect
+                      spec:
+                          connectorRef: cidelegate
+                          namespace: harness-delegate-ng
+                          automountServiceAccountToken: true
+                  execution:
+                      steps:
+                          - step:
+                                type: Run
+                                name: Run Unit Tests
+                                identifier: Run_Unit_Tests
+                                spec:
+                                    connectorRef: Docker_Quickstart
+                                    image: golang:1.15
+                                    shell: Sh
+                                    command: |
+                                        go get gotest.tools/gotestsum
+                                        gotestsum --format=standard-verbose --junitfile unit-tests.xml || true
+                                        CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo
+                                    reports:
+                                        type: JUnit
+                                        spec:
+                                            paths:
+                                                - "*.xml"
+                          - step:
+                                type: BuildAndPushDockerRegistry
+                                name: Build and push an image to Docker Registry
+                                identifier: Build_and_push_an_image_to_Docker_Registry
+                                spec:
+                                    connectorRef: Docker_Quickstart
+                                    repo: harness-ci/ciquickstart
+                                    tags:
+                                        - <+pipeline.sequenceId>
+                                failureStrategies: []
+        - stage:
+              name: Run Integration Test
+              identifier: Run_Integration_Test
+              type: CI
+              spec:
+                  cloneCodebase: false
+                  infrastructure:
+                      useFromStage: Build_Test_and_Push
+                  serviceDependencies:
+                      - identifier: Run_Hello_World_Server
+                        name: Run Hello World Server
+                        type: Service
+                        spec:
+                            connectorRef: Docker_Quickstart
+                            image: harness-ci/ciquickstart:<+pipeline.sequenceId>
+                  execution:
+                      steps:
+                          - step:
+                                type: Run
+                                name: test connection to server
+                                identifier: test_connection_to_server
+                                spec:
+                                    connectorRef: Docker_Quickstart
+                                    image: curlimages/curl:7.73.0
+                                    shell: Sh
+                                    command: |-
+                                        sleep 10
+                                        curl localhost:8080
+                                        curl localhost:8080?Hello!_this_is_harness_ci!
