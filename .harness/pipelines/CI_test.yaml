@@ -48,7 +48,7 @@ pipeline:
                                 identifier: Build_and_push_an_image_to_Docker_Registry
                                 spec:
                                     connectorRef: Docker_Quickstart
-                                    repo: harness-ci/ciquickstart
+                                    repo: harness-ci
                                     tags:
                                         - <+pipeline.sequenceId>
                                 failureStrategies: []
