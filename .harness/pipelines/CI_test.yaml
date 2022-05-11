@@ -49,7 +49,7 @@ pipeline:
                                 spec:
                                     connectorRef: Nexus
                                     target: https://nexus.disqotech.com/repository/harness-ci/
-                                    sourcePath: src/js/**/*.js
+                                    sourcePath: src/go/**/*.go
         - stage:
               name: Run Integration Test
               identifier: Run_Integration_Test
