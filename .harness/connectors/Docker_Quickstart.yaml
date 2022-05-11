@@ -1,13 +1,12 @@
 connector:
   name: Docker-nexus connection
   identifier: Docker_Quickstart
-  description:
   orgIdentifier: default
   projectIdentifier: PaaS_CI
   type: DockerRegistry
   spec:
     dockerRegistryUrl: https://nexus.disqotech.com/
-    providerType: DockerHub
+    providerType: Other
     auth:
       type: UsernamePassword
       spec:
