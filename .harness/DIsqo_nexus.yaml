@@ -1,0 +1,15 @@
+connector:
+  name: DIsqo_nexus
+  identifier: DIsqo_nexus
+  description:
+  orgIdentifier: default
+  projectIdentifier: PaaS_CI
+  type: Nexus
+  spec:
+    nexusServerUrl: https://nexus.disqotech.com/
+    version: 3.x
+    auth:
+      type: UsernamePassword
+      spec:
+        username: victor.quizhpi
+        passwordRef: Nexus_vq
