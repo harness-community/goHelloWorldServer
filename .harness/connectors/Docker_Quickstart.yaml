@@ -5,7 +5,7 @@ connector:
   projectIdentifier: PaaS_CI
   type: DockerRegistry
   spec:
-    dockerRegistryUrl: https://nexus.disqotech.com/
+    dockerRegistryUrl: https://nexus.disqotech.com/repository/harness-ci/
     providerType: Other
     auth:
       type: UsernamePassword
