@@ -1,7 +1,6 @@
 connector:
   name: DIsqo_nexus
   identifier: DIsqo_nexus
-  description:
   orgIdentifier: default
   projectIdentifier: PaaS_CI
   type: Nexus
