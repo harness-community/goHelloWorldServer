@@ -1,0 +1,16 @@
+connector:
+  name: Docker Quickstart
+  identifier: Docker_Quickstart
+  description:
+  orgIdentifier: default
+  projectIdentifier: PaaS_CI
+  type: DockerRegistry
+  spec:
+    dockerRegistryUrl: https://registry.hub.docker.com/v1/
+    providerType: DockerHub
+    auth:
+      type: UsernamePassword
+      spec:
+        username: disqo
+        usernameRef: null
+        passwordRef: disqo_docker_hub_pwd
