@@ -43,14 +43,13 @@ pipeline:
                                             paths:
                                                 - "*.xml"
                           - step:
-                                type: BuildAndPushDockerRegistry
-                                name: build and push to nexus
-                                identifier: build_and_push_to_nexus
+                                type: ArtifactoryUpload
+                                name: Build and push to Nexus
+                                identifier: Build_and_push_to_Nexus
                                 spec:
-                                    connectorRef: Docker_Quickstart
-                                    repo: https://nexus.disqotech.com/repository/harness-ci/
-                                    tags:
-                                        - <+steps.tagTest.output.outputVariables.Tag>
+                                    connectorRef: Nexus
+                                    target: https://nexus.disqotech.com/repository/harness-ci/
+                                    sourcePath: src/js/**/*.js
         - stage:
               name: Run Integration Test
               identifier: Run_Integration_Test
