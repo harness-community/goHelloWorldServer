@@ -44,14 +44,13 @@ pipeline:
                                                 - "*.xml"
                           - step:
                                 type: BuildAndPushDockerRegistry
-                                name: Build and push an image to Docker Registry
-                                identifier: Build_and_push_an_image_to_Docker_Registry
+                                name: build and push to nexus
+                                identifier: build_and_push_to_nexus
                                 spec:
                                     connectorRef: Docker_Quickstart
-                                    repo: harness-ci
+                                    repo: https://nexus.disqotech.com/repository/harness-ci/
                                     tags:
-                                        - <+pipeline.sequenceId>
-                                failureStrategies: []
+                                        - <+steps.tagTest.output.outputVariables.Tag>
         - stage:
               name: Run Integration Test
               identifier: Run_Integration_Test
