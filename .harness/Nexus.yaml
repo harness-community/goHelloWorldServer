@@ -1,0 +1,14 @@
+connector:
+  name: Nexus
+  identifier: Nexus
+  description:
+  orgIdentifier: default
+  projectIdentifier: PaaS_CI
+  type: Artifactory
+  spec:
+    artifactoryServerUrl: https://nexus.disqotech.com/repository/harness-ci/
+    auth:
+      type: UsernamePassword
+      spec:
+        username: victor.quizhpi
+        passwordRef: Nexus_vq
