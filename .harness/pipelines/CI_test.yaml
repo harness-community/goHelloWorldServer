@@ -64,8 +64,8 @@ pipeline:
                         name: Run Hello World Server
                         type: Service
                         spec:
-                            connectorRef: Docker_Quickstart
-                            image: harness-ci/ciquickstart:<+pipeline.sequenceId>
+                            connectorRef: account.Jfrog_Artifactory
+                            image: https://artifactory.disqotech.com/artifactory/docker_harness/<+pipeline.sequenceId>
                   execution:
                       steps:
                           - step:
@@ -73,7 +73,7 @@ pipeline:
                                 name: test connection to server
                                 identifier: test_connection_to_server
                                 spec:
-                                    connectorRef: Docker_Quickstart
+                                    connectorRef: account.harnessImage
                                     image: curlimages/curl:7.73.0
                                     shell: Sh
                                     command: |-
