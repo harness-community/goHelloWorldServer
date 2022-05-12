@@ -30,7 +30,7 @@ pipeline:
                                 name: Run Unit Tests
                                 identifier: Run_Unit_Tests
                                 spec:
-                                    connectorRef: Docker_Quickstart
+                                    connectorRef: account.Jfrog_Artifactory
                                     image: golang:1.15
                                     shell: Sh
                                     command: |
