@@ -31,7 +31,7 @@ pipeline:
                                 identifier: Run_Unit_Tests
                                 spec:
                                     connectorRef: account.Jfrog_Artifactory
-                                    image: golang:1.15
+                                    image: artifactory.disqotech.com/docker-local/golang:1.17
                                     shell: Sh
                                     command: |
                                         go get gotest.tools/gotestsum
