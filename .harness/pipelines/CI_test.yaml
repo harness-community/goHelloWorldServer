@@ -42,14 +42,6 @@ pipeline:
                                         spec:
                                             paths:
                                                 - "*.xml"
-                          - step:
-                                type: ArtifactoryUpload
-                                name: Build and push to Nexus
-                                identifier: Build_and_push_to_Nexus
-                                spec:
-                                    connectorRef: Nexus
-                                    target: https://nexus.disqotech.com/repository/harness-ci/
-                                    sourcePath: src/go/**/*.go
         - stage:
               name: Run Integration Test
               identifier: Run_Integration_Test
