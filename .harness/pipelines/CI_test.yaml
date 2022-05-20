@@ -12,7 +12,7 @@ pipeline:
                 build: <+input>
     stages:
         - stage:
-              name: Build Test and Push
+              name: Build Test and Push v2
               identifier: Build_Test_and_Push
               type: CI
               spec:
