@@ -1,0 +1,31 @@
+pipeline:
+    name: nofar_start
+    identifier: nofar_start
+    projectIdentifier: mohit_git_simplification_project
+    orgIdentifier: aaaaaaaaaaaaaaaaDeepakOrg
+    tags: {}
+    stages:
+        - stage:
+              name: rrrr
+              identifier: rrrr
+              type: CI
+              spec:
+                  cloneCodebase: false
+                  infrastructure:
+                      type: KubernetesDirect
+                      spec:
+                          connectorRef: <+input>
+                          namespace: <+input>
+                          automountServiceAccountToken: true
+                          nodeSelector: {}
+                  execution:
+                      steps:
+                          - step:
+                                type: Run
+                                name: echo
+                                identifier: echo
+                                spec:
+                                    connectorRef: account.harnessImage
+                                    image: alpine
+                                    shell: Sh
+                                    command: echo hello
