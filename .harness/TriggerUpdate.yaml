@@ -1,0 +1,38 @@
+pipeline:
+    name: TriggerUpdate
+    identifier: TriggerUpdate
+    projectIdentifier: RajathaTest
+    orgIdentifier: default
+    storeType: REMOTE
+    remoteType: create
+    tags: {}
+    properties:
+        ci:
+            codebase:
+                connectorRef: RaghavGitConnector
+                build: <+input>
+    stages:
+        - stage:
+              name: Stage1
+              identifier: Stage1
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  infrastructure:
+                      type: KubernetesDirect
+                      spec:
+                          connectorRef: account.CItestK8sConnector8Jk0wfloX5
+                          namespace: harness-qa-delegate
+                          automountServiceAccountToken: true
+                          nodeSelector: {}
+                  execution:
+                      steps:
+                          - step:
+                                type: Run
+                                name: Echo
+                                identifier: Echo
+                                spec:
+                                    connectorRef: account.testDockerConnectorRITfzx1DFr
+                                    image: alpine:latest
+                                    shell: Sh
+                                    command: echo "hello"
