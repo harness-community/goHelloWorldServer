@@ -1,0 +1,37 @@
+pipeline:
+    name: TestPipelineDemo
+    identifier: TestPipelineDemo
+    projectIdentifier: RajathaTest
+    orgIdentifier: default
+    tags: {}
+    properties:
+        ci:
+            codebase:
+                connectorRef: RaghavGitConnector
+                build: <+input>
+    stages:
+        - stage:
+              name: stg1
+              identifier: stg1
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  infrastructure:
+                      type: KubernetesDirect
+                      spec:
+                          connectorRef: account.CItestK8sConnectorLamBRTyzKs
+                          namespace: harness-delegate-qa
+                          automountServiceAccountToken: true
+                          nodeSelector: {}
+                          os: Linux
+                  execution:
+                      steps:
+                          - step:
+                                type: Run
+                                name: sdvfsd
+                                identifier: sdvfsd
+                                spec:
+                                    connectorRef: account.CItestDockerConnectorzidW3M9Hmq
+                                    image: alpine
+                                    shell: Sh
+                                    command: echo test

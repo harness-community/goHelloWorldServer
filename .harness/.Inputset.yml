@@ -1,0 +1,14 @@
+inputSet:
+  identifier: "Inputset1"
+  name: "Inputset1"
+  orgIdentifier: "default"
+  projectIdentifier: "RajathaTest"
+  pipeline:
+    identifier: "TestPipelineDemo"
+    properties:
+      ci:
+        codebase:
+          build:
+            type: "branch"
+            spec:
+              branch: "master"
