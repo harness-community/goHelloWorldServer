@@ -30,4 +30,4 @@ pipeline:
                     connectorRef: docker2
                     image: alpine
                     shell: Sh
-                    command: echo "helolo"
+                    command: echo "hello"
