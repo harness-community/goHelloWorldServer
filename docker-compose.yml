@@ -1,9 +1,8 @@
-version: "2"
+version: '3.8'
 services:
-  node1:
-    image: docker
-    command: docker ps -a
-
-  node2:
-    image: docker
-    command: docker images -a
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --loglevel debug
