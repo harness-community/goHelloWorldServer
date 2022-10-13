@@ -1,0 +1,33 @@
+pipeline:
+  name: Remote Pipeline
+  identifier: Remote_Pipeline
+  projectIdentifier: testapp
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: Stage1
+        identifier: Stage1
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: false
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: account.CItestK8sConnector0H3jpA92Aq
+              namespace: harness-qa-delegate
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Echo Run
+                  identifier: Echo_Run
+                  spec:
+                    connectorRef: docker2
+                    image: alpine
+                    shell: Sh
+                    command: echo "helloo"
