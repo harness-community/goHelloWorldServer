@@ -1,5 +1,9 @@
 version: "2"
 services:
-  docker-in-docker:
-    image: docker:dind
-    privileged: true
+  node1:
+    image: docker
+    command: docker ps -a
+
+  node2:
+    image: docker
+    command: docker images -a
