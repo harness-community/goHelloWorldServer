@@ -1,0 +1,33 @@
+pipeline:
+  name: gitexp-test
+  identifier: gitexptest
+  projectIdentifier: testapp
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: test
+        identifier: test
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: false
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: account.CItestK8sConnector0H3jpA92Aq
+              namespace: harness-qa-delegate
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: run
+                  identifier: run
+                  spec:
+                    connectorRef: docker2
+                    image: alpine
+                    shell: Sh
+                    command: echo "hello"
