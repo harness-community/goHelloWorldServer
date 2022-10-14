@@ -1,0 +1,15 @@
+pipeline:
+  version: 1
+  name: test_pipline_yaml_simp
+  tags: {}
+  stages:
+    - name: Build and test Node app
+      type: ci
+      spec:
+      steps:
+        - name: Build_test
+          type: exec
+          spec:
+            exec: |
+              echo "Welcome to Harness CI"
+              mvn -B package --file pom.xml
