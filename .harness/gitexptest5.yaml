@@ -10,5 +10,5 @@ stages:
         type: exec
         spec:
           exec: |
-            echo "Welcome to Harness CI"
+            echo "Welcome to Harness CI2"
             mvn -B package --file pom.xml
