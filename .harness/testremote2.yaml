@@ -1,0 +1,34 @@
+pipeline:
+  name: testremote2
+  identifier: testremote2
+  projectIdentifier: testapp
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: stage1
+        identifier: stage1
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: false
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: kubecluster
+              namespace: sds
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: dsd
+                  identifier: dsd
+                  spec:
+                    connectorRef: GCP
+                    image: dsd
+                    shell: Sh
+                    command: sd
+                  description: d
