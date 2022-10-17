@@ -1,0 +1,33 @@
+pipeline:
+  name: dsdss
+  identifier: dsdss
+  projectIdentifier: testapp
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: dsfdf
+        identifier: dsfdf
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: false
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: kubecluster
+              namespace: cdfdf
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: dc
+                  identifier: dc
+                  spec:
+                    connectorRef: DockerRaghav
+                    image: d
+                    shell: Sh
+                    command: vdcvd
