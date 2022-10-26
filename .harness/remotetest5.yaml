@@ -1,13 +1,13 @@
 version: "1"
 name: Java with Maven
 stages:
-  name: Build and test Java app
-  type: CI
-  spec:
-    steps:
-      name: Build
-      type: script
-      spec:
-        run: |-
-            echo "Hello world"
-            mvn install -DskipTests
+  - name: Build and test Java app
+    type: CI
+    spec:
+        steps:
+          - name: Build
+            type: script
+            spec:
+                run: |-
+                    echo "Hello world"
+                    mvn install -DskipTests
