@@ -1,0 +1,14 @@
+inputSet:
+  identifier: "gitlocal"
+  name: "gitlocal"
+  orgIdentifier: "default"
+  projectIdentifier: "testapp"
+  pipeline:
+    identifier: "Rm2"
+    properties:
+      ci:
+        codebase:
+          build:
+            type: "branch"
+            spec:
+              branch: "<+trigger.branch>"
