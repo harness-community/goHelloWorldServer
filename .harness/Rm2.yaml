@@ -8,10 +8,9 @@ pipeline:
     - stage:
         name: Build
         identifier: Build
-        description: ""
         type: CI
         spec:
-          cloneCodebase: false
+          cloneCodebase: true
           infrastructure:
             type: KubernetesDirect
             spec:
@@ -31,3 +30,8 @@ pipeline:
                     image: alpine
                     shell: Sh
                     command: echo "hello"
+  properties:
+    ci:
+      codebase:
+        connectorRef: RaghavPrivateGithub
+        build: <+input>
