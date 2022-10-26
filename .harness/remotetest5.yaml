@@ -6,8 +6,8 @@ stages:
     spec:
         steps:
           - name: Build
-            type: script
+            type: Run
             spec:
-                run: |-
+                command: |-
                     echo "Hello world"
                     mvn install -DskipTests
