@@ -1,0 +1,37 @@
+pipeline:
+  name: RP
+  identifier: RP
+  projectIdentifier: RaghavTest
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: RaghavTest
+        build: <+input>
+  stages:
+    - stage:
+        name: Stage
+        identifier: Stage
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: awscluster
+              namespace: harness-delegate-ng
+              nodeSelector: {}
+              os: Linux
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Echo
+                  identifier: Echo
+                  spec:
+                    connectorRef: docker
+                    image: alpine
+                    shell: Sh
+                    command: echo "hello"
