@@ -1,0 +1,14 @@
+inputSet:
+  identifier: "GithubIS"
+  name: "GithubIS"
+  orgIdentifier: "default"
+  projectIdentifier: "RaghavTest"
+  pipeline:
+    identifier: "RP"
+    properties:
+      ci:
+        codebase:
+          build:
+            type: "PR"
+            spec:
+              number: "<+trigger.prNumber>"
