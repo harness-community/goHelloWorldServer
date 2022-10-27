@@ -8,5 +8,5 @@ stages:
           - name: Build
             type: script
             spec:
-                command: |-
+                run: |-
                     echo "Hello world"
