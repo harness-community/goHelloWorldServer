@@ -1,0 +1,18 @@
+inputSet:
+  identifier: "isrm2"
+  pipeline:
+    identifier: "Rm2"
+    properties:
+      ci:
+        codebase:
+          build:
+            type: "branch"
+            spec:
+              branch: "main"
+    variables:
+    - name: "ACCOUNT"
+      type: "String"
+      value: "682624005382"
+  name: "isrm2"
+  orgIdentifier: "default"
+  projectIdentifier: "testapp"
