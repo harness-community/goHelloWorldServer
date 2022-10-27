@@ -22,6 +22,7 @@ pipeline:
             spec:
               connectorRef: awscluster
               namespace: harness-delegate-ng
+              automountServiceAccountToken: true
               nodeSelector: {}
               os: Linux
           execution:
@@ -35,6 +36,8 @@ pipeline:
                     image: alpine
                     shell: Sh
                     command: echo "hello"
+                    envVariables:
+                      dcdds: <+pipeline.variables.ACCOUNT>
   variables:
     - name: ACCOUNT
       type: String
