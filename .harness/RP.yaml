@@ -35,3 +35,9 @@ pipeline:
                     image: alpine
                     shell: Sh
                     command: echo "hello"
+  variables:
+    - name: ACCOUNT
+      type: String
+      default: "608178844183"
+      description: ""
+      value: <+input>.allowedValues(635780325939,682624005382,355166347423,822078214230,608178844183)
