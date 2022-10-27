@@ -30,6 +30,8 @@ pipeline:
                     image: alpine
                     shell: Sh
                     command: echo "hello"
+                    envVariables:
+                      aaa: <+pipeline.variables.ACCOUNT>
   properties:
     ci:
       codebase:
