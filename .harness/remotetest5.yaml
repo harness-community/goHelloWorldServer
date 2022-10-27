@@ -6,7 +6,7 @@ stages:
     spec:
         steps:
           - name: Build
-            type: Run
+            type: script
             spec:
                 command: |-
                     echo "Hello world"
