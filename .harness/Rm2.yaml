@@ -35,3 +35,9 @@ pipeline:
       codebase:
         connectorRef: RaghavPrivateGithub
         build: <+input>
+  variables:
+    - name: ACCOUNT
+      type: String
+      default: "682624005382"
+      description: ""
+      value: <+input>.allowedValues(635780325939,682624005382)
