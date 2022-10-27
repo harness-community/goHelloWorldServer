@@ -1,0 +1,33 @@
+pipeline:
+  name: RmQA
+  identifier: RmQA
+  projectIdentifier: RaghavTest
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: Stage
+        identifier: Stage
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: false
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: account.CItestK8sConnectorxwX9uT85io
+              namespace: assa
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: "Echo "
+                  identifier: Echo
+                  spec:
+                    connectorRef: docker
+                    image: alpine
+                    shell: Sh
+                    command: echo "hello"
