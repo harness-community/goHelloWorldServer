@@ -1,0 +1,11 @@
+inputSet:
+  identifier: "csdcc"
+  name: "csdcc"
+  orgIdentifier: "default"
+  projectIdentifier: "RaghavTest"
+  pipeline:
+    identifier: "RmQA"
+    variables:
+    - name: "ACCOUNT"
+      type: "String"
+      value: "608178844183"
