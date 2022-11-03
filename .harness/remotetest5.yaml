@@ -2,7 +2,7 @@ version: "1"
 name: Java with Maven
 stages:
   - name: Build and test Java app
-    type: CI
+    type: ci
     spec:
         clone:
             disabled: false
