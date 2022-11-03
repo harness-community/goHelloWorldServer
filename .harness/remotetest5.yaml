@@ -12,16 +12,3 @@ stages:
           spec:
             run: |-
               echo "Hello world"
-        - name: Run Tests
-          type: run_tests
-          spec:
-            language: Java
-            build_tool: Maven
-            build_args: test
-            test_reports:
-              type: JUnit
-              spec:
-                paths:
-                    - "**/*.xml"
-            strategy:
-              parallelism: 3
