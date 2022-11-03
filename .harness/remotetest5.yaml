@@ -1,14 +1,26 @@
-version: "1"
+version: 1
 name: Java with Maven
 stages:
   - name: Build and test Java app
     type: ci
     spec:
-        clone:
-            disabled: false
-        steps:
-          - name: Build
-            type: script
-            spec:
-                run: |-
-                    echo "Hello world"
+      clone:
+        disabled: false
+      steps:
+        - name: Build
+          type: script
+          spec:
+            run: |-
+              echo "Hello world"
+        - name: Run Tests
+          type: run_tests
+          spec:
+            language: Java
+            build_tool: Maven
+            build_args: test
+            test_reports:
+              type: JUnit
+              paths:
+                - "**/*.xml"
+            strategy:
+              parallelism: 3
