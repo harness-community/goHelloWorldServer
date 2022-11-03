@@ -20,7 +20,8 @@ stages:
             build_args: test
             test_reports:
               type: JUnit
-              paths:
-                - "**/*.xml"
+              spec:
+                paths:
+                    - "**/*.xml"
             strategy:
               parallelism: 3
