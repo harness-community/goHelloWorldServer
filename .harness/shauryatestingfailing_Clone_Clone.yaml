@@ -1,0 +1,154 @@
+---
+pipeline:
+  projectIdentifier: "shauryaTest"
+  orgIdentifier: "default"
+  tags: {}
+  stages:
+  - stage:
+      name: "build test and push "
+      identifier: "build_test_and_push"
+      type: "CI"
+      spec:
+        cloneCodebase: false
+        infrastructure:
+          type: "KubernetesDirect"
+          spec:
+            connectorRef: "k8stest"
+            namespace: "harness-delegate-ng"
+            automountServiceAccountToken: true
+            nodeSelector: {}
+            os: "Linux"
+        execution:
+          steps:
+          - step:
+              type: "Run"
+              name: "run unit tests"
+              identifier: "run_unit_tests"
+              spec:
+                connectorRef: "new_docker_test"
+                image: "golang:1.15"
+                shell: "Sh"
+                command: "go get gotest.tools/gotestsum\ngotestsum --format=standard-verbose\
+                  \ --junitfile unit-tests.xml\nCGO_ENABLED=0 GOOS=linux GOARCH=amd64\
+                  \ go build -a -tags netgo"
+                reports:
+                  type: "JUnit"
+                  spec:
+                    paths:
+                    - "*.xml"
+          - step:
+              type: "Run"
+              name: "run unit tests 2"
+              identifier: "run_unit_tests_2"
+              spec:
+                connectorRef: "new_docker_test"
+                image: "golang:1.15"
+                shell: "Sh"
+                command: "go get gotest.tools/gotestsum\ngotestsum --format=standard-verbose\
+                  \ --junitfile unit-tests.xml\nCGO_ENABLED=0 GOOS=linux GOARCH=amd64\
+                  \ go build -a -tags netgo"
+                reports:
+                  type: "JUnit"
+                  spec:
+                    paths:
+                    - "*.xml"
+              when:
+                stageStatus: "All"
+              failureStrategies: []
+          - parallel:
+            - step:
+                name: "acr"
+                identifier: "acr"
+                template:
+                  templateRef: "acr"
+                  versionLabel: "1"
+            - step:
+                type: "BuildAndPushACR"
+                name: "acr 2"
+                identifier: "acr_2"
+                spec:
+                  connectorRef: "account.testAzureConnector0Ma5pDuhvg"
+                  repository: "rep2"
+                  subscriptionId: "123"
+                  tags:
+                  - "tag 2"
+          - step:
+              type: "BuildAndPushACR"
+              name: "acrfrominput"
+              identifier: "acrfrominput"
+              spec:
+                connectorRef: "<+input>"
+                repository: "<+input>"
+                subscriptionId: "<+input>"
+                tags:
+                - "acrinput"
+        serviceDependencies:
+        - identifier: "sql"
+          name: "sql"
+          type: "Service"
+          description: "sql"
+          spec:
+            connectorRef: "test"
+            image: "mysql:5"
+      variables: []
+  - stage:
+      name: "build test and push 2 "
+      identifier: "build_test_and_push_2"
+      description: ""
+      type: "CI"
+      spec:
+        cloneCodebase: true
+        infrastructure:
+          type: "KubernetesDirect"
+          spec:
+            connectorRef: "k8stest"
+            namespace: "harness-delegate-ng"
+            nodeSelector: {}
+            os: "Linux"
+        execution:
+          steps:
+          - step:
+              type: "Run"
+              name: "run unit tests"
+              identifier: "run_unit_tests"
+              spec:
+                connectorRef: "new_docker_test"
+                image: "golang:1.15"
+                shell: "Sh"
+                command: "go get gotest.tools/gotestsum\ngotestsum --format=standard-verbose\
+                  \ --junitfile unit-tests.xml\nCGO_ENABLED=0 GOOS=linux GOARCH=amd64\
+                  \ go build -a -tags netgo"
+                reports:
+                  type: "JUnit"
+                  spec:
+                    paths:
+                    - "*.xml"
+          - step:
+              type: "Run"
+              name: "run unit tests 2"
+              identifier: "run_unit_tests_2"
+              spec:
+                connectorRef: "new_docker_test"
+                image: "golang:1.15"
+                shell: "Sh"
+                command: "go get gotest.tools/gotestsum\ngotestsum --format=standard-verbose\
+                  \ --junitfile unit-tests.xml\nCGO_ENABLED=0 GOOS=linux GOARCH=amd64\
+                  \ go build -a -tags netgo"
+                reports:
+                  type: "JUnit"
+                  spec:
+                    paths:
+                    - "*.xml"
+              when:
+                stageStatus: "All"
+              failureStrategies: []
+      when:
+        pipelineStatus: "All"
+  storeType: "INLINE"
+  properties:
+    ci:
+      codebase:
+        connectorRef: "githubtest"
+        build: "<+input>"
+  identifier: "shauryatestingfailing_Clone_Clone"
+  name: "shaurya-testing-failing - Clone - Clone"
