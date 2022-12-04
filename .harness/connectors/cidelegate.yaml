@@ -1,0 +1,12 @@
+connector:
+  name: ci-delegate
+  identifier: cidelegate
+  description:
+  orgIdentifier: default
+  projectIdentifier: PaaS_CI
+  type: K8sCluster
+  spec:
+    credential:
+      type: InheritFromDelegate
+    delegateSelectors:
+    - internaldelegate

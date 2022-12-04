@@ -1,0 +1,23 @@
+connector:
+  name: vsqdisqo
+  identifier: vsqdisqo
+  description:
+  orgIdentifier: default
+  projectIdentifier: PaaS_CI
+  type: Github
+  spec:
+    url: https://github.com/vsqdisqo/
+    validationRepo: goHelloWorldServer
+    authentication:
+      type: Http
+      spec:
+        type: UsernameToken
+        spec:
+          username: vsqdisqo
+          tokenRef: vsqdisqo_github
+    apiAccess:
+      type: Token
+      spec:
+        tokenRef: vsqdisqo_github
+    executeOnDelegate: true
+    type: Account

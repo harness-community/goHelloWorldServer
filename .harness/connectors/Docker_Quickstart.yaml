@@ -1,0 +1,14 @@
+connector:
+  name: Docker-nexus connection
+  identifier: Docker_Quickstart
+  orgIdentifier: default
+  projectIdentifier: PaaS_CI
+  type: DockerRegistry
+  spec:
+    dockerRegistryUrl: https://nexus.disqotech.com/repository/harness-ci/
+    providerType: Other
+    auth:
+      type: UsernamePassword
+      spec:
+        username: victor.quizhpi
+        passwordRef: Nexus_vq
