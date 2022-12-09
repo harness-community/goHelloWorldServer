@@ -124,7 +124,8 @@ pipeline:
   properties:
     ci:
       codebase:
-        connectorRef: account.goHelloWorldServer_repo
+        connectorRef: BS1223
+        repoName: goHelloWorldServer
         build: <+input>
   variables:
     - name: pipelineVar
