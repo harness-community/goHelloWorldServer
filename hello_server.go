@@ -27,7 +27,7 @@ func CreateGreeting(name string) string {
 }
 
 func main() {
-	// Create Server and Route Handlers Added comment Stuff
+	// Create Server and Route Handlers Added comment
 	r := mux.NewRouter()
 
 	r.HandleFunc("/", handler)
