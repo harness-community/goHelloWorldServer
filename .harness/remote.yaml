@@ -34,7 +34,7 @@ pipeline:
                   identifier: Run_1
                   spec:
                     connectorRef: test
-                    image: alpine
+                    image: <+input>
                     shell: Sh
                     command: echo node --version
                   description: echo
