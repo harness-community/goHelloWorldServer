@@ -1,0 +1,26 @@
+inputSet:
+  name: input1
+  identifier: input1
+  orgIdentifier: default
+  projectIdentifier: shauryaTest
+  pipeline:
+    identifier: remote
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: main-patch
+    stages:
+      - stage:
+          identifier: build
+          type: CI
+          spec:
+            execution:
+              steps:
+                - step:
+                    identifier: Run_1
+                    type: Run
+                    spec:
+                      image: alpine
