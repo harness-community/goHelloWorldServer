@@ -10,6 +10,8 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    env: 
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     steps:
-      uses: codecov/codecov-action@v3
-        env: CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    - uses: codecov/codecov-action@v3
+        
