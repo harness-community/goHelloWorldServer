@@ -46,6 +46,8 @@ pipeline:
                             branch: main
                             folderPath: _examples/gke
                           type: Github
+                        moduleSource:
+                          useConnectorCredentials: false
                       secretManagerRef: account.harnessSecretManager
                       skipRefreshCommand: false
                     delegateSelectors:
