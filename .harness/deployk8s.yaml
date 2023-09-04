@@ -50,8 +50,6 @@ pipeline:
                           useConnectorCredentials: false
                       secretManagerRef: account.harnessSecretManager
                       skipRefreshCommand: false
-                    delegateSelectors:
-                      - helm-delegate
                   timeout: 10m
               - step:
                   type: HarnessApproval
