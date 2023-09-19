@@ -31,7 +31,23 @@ pipeline:
                     command: |
                       go get gotest.tools/gotestsum
                       gotestsum --format=standard-verbose --junitfile unit-tests.xml || true
-                      sleep 5m
+                      CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo
+                    reports:
+                      type: JUnit
+                      spec:
+                        paths:
+                          - "*.xml"
+                    outputVariables:
+                      - name: testresult
+              - step:
+                  type: Run
+                  name: Run_2
+                  identifier: Run_2
+                  spec:
+                    connectorRef: Shashank_docker
+                    image: golang:1.15
+                    shell: Sh
+                    command: |-
                       testresult="passed"
                       testfail=$(grep -c "<failure" *.xml)
                       if [ $testfail == 1 ]
@@ -42,14 +58,6 @@ pipeline:
                       fi
                       echo $testresult
                       export testresult
-                      CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo
-                    reports:
-                      type: JUnit
-                      spec:
-                        paths:
-                          - "*.xml"
-                    outputVariables:
-                      - name: testresult
           infrastructure:
             type: KubernetesDirect
             spec:
