@@ -30,7 +30,7 @@ pipeline:
                     shell: Sh
                     command: |-
                       go get gotest.tools/gotestsum
-                      gotestsum --format=standard-verbose --junitfile test.xml || true
+                      gotestsum --format=standard-verbose --junitfile unit-tests.xml || true
                       CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo
                       sleep 5m
                       testresult="passed"
@@ -47,7 +47,7 @@ pipeline:
                       type: JUnit
                       spec:
                         paths:
-                          - "**/*.xml"
+                          - test.xml
                     outputVariables:
                       - name: testresult
           infrastructure:
