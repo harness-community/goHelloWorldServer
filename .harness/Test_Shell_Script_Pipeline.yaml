@@ -34,7 +34,7 @@ pipeline:
                       CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo
                       sleep 5m
                       testresult="passed"
-                      testfail=$(grep -c "<failure" test.xml)
+                      testfail=$(grep -c "<failure" unit-tests.xml)
                       if [ $testfail == 1 ]
                       then
                           testresult="failed"
@@ -47,7 +47,7 @@ pipeline:
                       type: JUnit
                       spec:
                         paths:
-                          - test.xml
+                          - unit-tests.xml
                     outputVariables:
                       - name: testresult
           infrastructure:
