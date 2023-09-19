@@ -46,7 +46,7 @@ pipeline:
                       type: JUnit
                       spec:
                         paths:
-                          - "**/test.xml"
+                          - "**/*.xml"
                     outputVariables:
                       - name: testresult
           infrastructure:
