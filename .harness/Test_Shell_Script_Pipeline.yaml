@@ -33,7 +33,7 @@ pipeline:
                       gotestsum --format=standard-verbose --junitfile unit-tests.xml || true
                       sleep 5m
                       testresult="passed"
-                      testfail=$(grep -c "<failure" unit-tests.xml)
+                      testfail=$(grep -c "<failure" *.xml)
                       if [ $testfail == 1 ]
                       then
                           testresult="failed"
