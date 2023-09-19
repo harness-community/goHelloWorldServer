@@ -32,6 +32,7 @@ pipeline:
                       go get gotest.tools/gotestsum
                       gotestsum --format=standard-verbose --junitfile test.xml || true
                       CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo
+                      sleep 5m
                       testresult="passed"
                       testfail=$(grep -c "<failure" test.xml)
                       if [ $testfail == 1 ]
