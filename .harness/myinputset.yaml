@@ -1,0 +1,25 @@
+inputSet:
+  name: myinputset
+  identifier: myinputset
+  orgIdentifier: default
+  projectIdentifier: shashank_sandbox
+  pipeline:
+    identifier: myfirstdeployment
+    stages:
+      - stage:
+          identifier: QA
+          type: Deployment
+          spec:
+            service:
+              serviceInputs:
+                serviceDefinition:
+                  type: Kubernetes
+                  spec:
+                    artifacts:
+                      primary:
+                        primaryArtifactRef: myimage
+                        sources:
+                          - identifier: myimage
+                            type: DockerRegistry
+                            spec:
+                              digest: <+input>

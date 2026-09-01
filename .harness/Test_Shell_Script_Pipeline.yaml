@@ -1,0 +1,60 @@
+pipeline:
+  name: Test_Shell_Script_Pipeline
+  identifier: Test_Shell_Script_Pipeline
+  projectIdentifier: shashank_sandbox
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: shashank_github
+        repoName: goHelloWorldServer
+        build: <+input>
+  stages:
+    - stage:
+        name: test_build
+        identifier: test_build
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Run_1
+                  identifier: Run_1
+                  spec:
+                    connectorRef: Shashank_docker
+                    image: golang:1.15
+                    shell: Sh
+                    command: |
+                      go get gotest.tools/gotestsum
+                      gotestsum --format=standard-verbose --junitfile unit-tests.xml || true
+                      sleep 5m
+                      testresult="passed"
+                      testfail=$(grep -c "<failure" *.xml)
+                      if [ $testfail == 1 ]
+                      then
+                          testresult="failed"
+                      else
+                          testresult="passed"
+                      fi
+                      echo $testresult
+                      export testresult
+                      CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo
+                    reports:
+                      type: JUnit
+                      spec:
+                        paths:
+                          - "**/*.xml"
+                    outputVariables:
+                      - name: testresult
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: account.shashankcluster
+              namespace: harness-delegate-ng
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
